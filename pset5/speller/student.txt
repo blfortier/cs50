@@ -1,0 +1,14 @@
+Dictionary loaded!
+Yes! Loaded!!
+
+MISSPELLED WORDS
+
+The
+cat
+and
+dog
+live
+in
+the
+yard
+num words mispelled: 8
