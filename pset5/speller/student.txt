@@ -4,11 +4,12 @@ Yes! Loaded!!
 MISSPELLED WORDS
 
 The
-cat
 and
-dog
-live
 in
 the
 yard
-num words mispelled: 8
+and
+eat
+num words misspelled: 7
+
+Num words in dictionary: 7

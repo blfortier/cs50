@@ -13,41 +13,43 @@
 bool check(const char *word)
 {
      int alpha_index = 0;
-    int mispelled_words = 0;
+    int misspelled_words = 0;
     node *pointer = root;
+    //printf("\n\nCHECK\n");
+    //printf("checking %s\n", word);
 
 
-     for (int i = 0; i <= strlen(word); i++)
+    for (int i = 0; i < strlen(word); i++)
     {
-        int letter = tolower(word[i]);
+        char letter = tolower(word[i]);
+       // printf("checking letter %c\n", letter);
 
         if (letter >= 97 && letter <= 122)
              alpha_index = letter - 97;
         else if (letter == 39)
             alpha_index = 26;
-
-        pointer = pointer -> children[alpha_index];
-
-        if ((pointer -> children[i]) == NULL)
+        //printf("alpha_index is: %i\n", alpha_index);
+        //pointer = pointer -> children[alpha_index];
+   // printf("address? %i\n", 0x1087520);
+        if (pointer->children[alpha_index] == NULL)
         {
-            mispelled_words++;
+            //printf("failed on letter %c found null child\n", letter);
+            misspelled_words++;
             return false;
         }
         else
-            pointer = pointer -> children[i + 1];
-
-        if (letter == EOF)
         {
-            if ((pointer -> is_word) == true)
-                return true;
+            pointer = pointer->children[alpha_index];
         }
 
 
     }
+   // printf("got to end of checked word now checking if the word is valid\n");
+    if (pointer -> is_word)
+        return true;
 
 
     return false;
-
 }
 
 // Loads dictionary into memory, returning true if successful else false
@@ -63,19 +65,21 @@ bool load(const char *dictionary)
 
     int alpha_index;
     //char letter;
-    long long num_words = 0;
-    char ch = '\n';
 
+    char ch = '\n';
     root = malloc(sizeof(node));
-    node *leaf = NULL;
+
+    node *leaf = root;
+
 
     // Iterate through dictionary to load every word
     while(true)
     {
-        leaf = root;
 
         ch = fgetc(dict);
-       // printf("%c", ch);
+
+       // printf("checking character: %i\n", ch);
+
 
 
         // While the end of the word
@@ -93,26 +97,42 @@ bool load(const char *dictionary)
             }
 
             tolower(ch);
-            if (ch >= 97 && ch <= 122)
+            if (isalpha(ch)) // isalpha
                 alpha_index = ch - 97;
-            else if (ch == 39)
+            else if (!isalpha(ch))
                 alpha_index = 26;
+
+           // printf("alpha index for %c is: %i\n", ch, alpha_index);
 
             if(alpha_index >= 0 && alpha_index <= 26)
             {
                 if (leaf -> children[alpha_index] == NULL)
                 {
+                  //  printf("Creating child node\n");
                     leaf -> children[alpha_index] = malloc(sizeof(node));
-
+                  //  printf("moving to new node\n");
+                    leaf = leaf -> children[alpha_index];
                 }
                 else
-                    leaf = leaf -> children[alpha_index];
+                {
+                   // printf("moving to existing child node\n");
+                    leaf = leaf ->children[alpha_index];
+                }
+                 //printf("Num words in dictionary: %u\n", num_words);
             }
         }
+        else
+        {
+            //printf("finished word\n");
+            leaf -> is_word = true;
+            num_words++;
+            leaf = root;
+        }
+       // printf("%c", ch);
 
-        leaf -> is_word = true;
-        num_words++;
+
     }
+
      if (ferror(dict))
     {
         fclose(dict);
@@ -122,10 +142,10 @@ bool load(const char *dictionary)
     }
 
 
-    free(leaf);
+
+    //free(leaf);
    // free(root);
 
-    //printf("Dictionary: \n%c", ch);
 
     return true;
 
@@ -134,7 +154,7 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
+    return num_words;
     return 0;
 }
 

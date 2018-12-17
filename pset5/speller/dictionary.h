@@ -24,5 +24,6 @@ typedef struct node
 }
 node;
 
-node *root;
+node *root = NULL;
 
+unsigned int num_words = 0;
