@@ -23,7 +23,3 @@ typedef struct node
     struct node *children[27];
 }
 node;
-
-node *root = NULL;
-
-unsigned int num_words = 0;

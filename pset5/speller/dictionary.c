@@ -9,12 +9,19 @@
 
 #include "dictionary.h"
 
+node *root = NULL;
+node *trav = NULL;
+unsigned int num_words = 0;
+
+
+void free_nodes(node *travel);
+
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
      int alpha_index = 0;
     int misspelled_words = 0;
-    node *pointer = root;
+    trav = root;
     //printf("\n\nCHECK\n");
     //printf("checking %s\n", word);
 
@@ -25,13 +32,13 @@ bool check(const char *word)
        // printf("checking letter %c\n", letter);
 
         if (letter >= 97 && letter <= 122)
-             alpha_index = letter - 97;
+             alpha_index = letter - 97../
         else if (letter == 39)
             alpha_index = 26;
         //printf("alpha_index is: %i\n", alpha_index);
-        //pointer = pointer -> children[alpha_index];
+        //trav = trav -> children[alpha_index];
    // printf("address? %i\n", 0x1087520);
-        if (pointer->children[alpha_index] == NULL)
+        if (trav->children[alpha_index] == NULL)
         {
             //printf("failed on letter %c found null child\n", letter);
             misspelled_words++;
@@ -39,13 +46,13 @@ bool check(const char *word)
         }
         else
         {
-            pointer = pointer->children[alpha_index];
+            trav = trav->children[alpha_index];
         }
 
 
     }
    // printf("got to end of checked word now checking if the word is valid\n");
-    if (pointer -> is_word)
+    if (trav -> is_word)
         return true;
 
 
@@ -154,15 +161,42 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    return num_words;
-    return 0;
+   if(&load)
+   {
+       printf("num words: %u\n", num_words);
+        return num_words;
+   }
+    else
+        return 0;
+
+
+
+
 }
 
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    // TODO
-    return false;
+    if (root)
+    {
+        trav = root;
+        free_nodes(trav);
+        return true;
+    }
+    else
+        return false;
+
 }
 
+
+void free_nodes(node *travel)
+{
+    for (int i = 0; i < 27; i++)
+    {
+        if (travel->children[i])
+            free_nodes(travel->children[i]);
+    }
+
+    free(travel);
+}
 
