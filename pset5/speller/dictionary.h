@@ -23,3 +23,6 @@ typedef struct node
     struct node *children[27];
 }
 node;
+
+// Declare a helper function for unload
+void free_nodes(node *travel);
