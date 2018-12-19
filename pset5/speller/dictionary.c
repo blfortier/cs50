@@ -15,23 +15,27 @@ typedef struct node
 }
 node;
 
+// Declare a helper function for unload
+void free_nodes(node *travel);
+
 
 // Initialize a global node root
 // and node trav, set to NULL
 node *root = NULL;
 
-// Declare a helper function for unload
-void free_nodes(node *travel);
-
 // To count the number of words
 // being entered in dictionary
 unsigned int num_words = 0;
+
+int alpha_index(char);
 
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
     // To hold the index for current letter
-    int alpha_index = 0;
+    int position = 0;
+
+    char letter = '\n';
 
     // To count number of misspelled words
     int misspelled_words = 0;
@@ -42,24 +46,11 @@ bool check(const char *word)
     // For every char in the word
     for (int i = 0; i < strlen(word); i++)
     {
-        // Make sure the char is lowercase
-        char letter = tolower(word[i]);
-
-        // If ch is an alpha, set alpha_index
-            // to ch - 97 --> will result in
-            // a value between 0 and 25, inclusively
-            if (letter >= 97 && letter <= 122)
-            {
-                alpha_index = letter - 97;
-            }
-            // If an apostrophe, set alpha_index to 26
-            else if (letter == 39)
-                alpha_index = 26;
-
+        position = alpha_index(letter);
 
         // If the pointer to children
         // @ alpha-index is NULL
-        if (trav->children[alpha_index] == NULL)
+        if (trav->children[position] == NULL)
         {
             // Increment misspelled_words
             misspelled_words++;
@@ -70,7 +61,7 @@ bool check(const char *word)
         else
         {
             // Move pointer to next letter
-            trav = trav->children[alpha_index];
+            trav = trav->children[position];
         }
     }
 
@@ -102,7 +93,7 @@ bool load(const char *dictionary)
     }
 
     // To hold the index for current letter
-    int alpha_index = 0;
+    int position = 0;
 
     // A variable to store each
     // char being read in
@@ -142,37 +133,27 @@ bool load(const char *dictionary)
                 return true;
             }
 
-            // Ensure each letter is lowercase
-            tolower(ch);
+            position = alpha_index(ch);
 
-
-            // If ch is an alpha, set alpha_index
-            // to ch - 97 --> will result in
-            // a value between 0 and 25, inclusively
-            if (ch >= 97 && ch <= 122)
-                alpha_index = ch - 97;
-            // If an apostrophe, set alpha_index to 26
-            else if (ch == 39)
-                alpha_index = 26;
 
             // Make sure the alpha_index is
             // between 0 and 26, inclusively
-            if(alpha_index >= 0 && alpha_index <= 26)
+            if(position >= 0 && position <= 26)
             {
                 // If the children node @ alpha_index is empty
-                if (leaf -> children[alpha_index] == NULL)
+                if (leaf -> children[position] == NULL)
                 {
                     // malloc a new children node
-                    leaf -> children[alpha_index] = malloc(sizeof(node));
+                    leaf -> children[position] = malloc(sizeof(node));
                     //  printf("moving to new node\n");
                     // Point leaf to the newly created node
-                    leaf = leaf -> children[alpha_index];
+                    leaf = leaf -> children[position];
                 }
                 // If node already exists
                 else
                 {
                     // Move leaf pointer to next node
-                    leaf = leaf ->children[alpha_index];
+                    leaf = leaf ->children[position];
                 }
             }
         }
@@ -215,15 +196,11 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // If the dictionary was loaded
-   /*if(load == true)
-   {        // Return number of words
-     */   // in dictionary
+    // If the dictionary was loaded return number of words
+    if (&load)
         return num_words;
-   //}
-   // Return 0 if not loaded yet
-   /* else
-        return 0;*/
+    else
+        return 0;
 }
 
 // Unloads dictionary from memory, returning true if successful else false
@@ -244,8 +221,9 @@ bool unload(void)
         // Return true upon success
         return true;
     }
+
     // Return false upon failed unload
-        return false;
+     return false;
 
     free(traverse);
 }
@@ -254,15 +232,30 @@ bool unload(void)
 // A helper function for unload
 void free_nodes(node *travel)
 {
-    // For every node in children
+    // For every node pointer in children
     for (int i = 0; i < 27; i++)
     {
-        // If the pointer to children @ i is not NULL
+        // If the pointer to children @ i is not NULL,
         // call the free_nodes function recursively
-        if (travel->children[i])
-            free_nodes(travel->children[i]);
+        if (travel -> children[i])
+            free_nodes(travel -> children[i]);
     }
 
     // Free the travel pointer
     free(travel);
 }
+
+// Find the position for the letter
+// in the children node
+int alpha_index(char ch)
+{
+    // If an apostrophe
+    if (ch == '\'')
+        return 26;
+    else if (ch >= 'a' && ch <= 'z')
+        return ch - 'a';
+    else
+        return ch - 'A';
+}
+
+
