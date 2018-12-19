@@ -8,10 +8,20 @@
 
 #include "dictionary.h"
 
+typedef struct node
+{
+    bool is_word;
+    struct node *children[27];
+}
+node;
+
+
 // Initialize a global node root
 // and node trav, set to NULL
 node *root = NULL;
-node *trav = NULL;
+
+// Declare a helper function for unload
+void free_nodes(node *travel);
 
 // To count the number of words
 // being entered in dictionary
@@ -27,7 +37,7 @@ bool check(const char *word)
     int misspelled_words = 0;
 
     // Set trav node pointing to root node
-    trav = root;
+    node *trav = root;
 
     // For every char in the word
     for (int i = 0; i < strlen(word); i++)
@@ -35,14 +45,17 @@ bool check(const char *word)
         // Make sure the char is lowercase
         char letter = tolower(word[i]);
 
-        // If letter is an alpha, set alpha_index
-        // to letter - 97 --> will result in
-        // a value between 0 and 25, inclusively
-        if (isalpha(letter))
-             alpha_index = letter - 97;
-        // If an apostrophe, set alpha_index to 26
-        else if (!isalpha(letter))
-            alpha_index = 26;
+        // If ch is an alpha, set alpha_index
+            // to ch - 97 --> will result in
+            // a value between 0 and 25, inclusively
+            if (letter >= 97 && letter <= 122)
+            {
+                alpha_index = letter - 97;
+            }
+            // If an apostrophe, set alpha_index to 26
+            else if (letter == 39)
+                alpha_index = 26;
+
 
         // If the pointer to children
         // @ alpha-index is NULL
@@ -82,18 +95,18 @@ bool load(const char *dictionary)
     {
         // Print error message
         printf("Could not load dictionary\n");
-
+        unload();
         // Return false upon
         // failed load attempt
         return false;
     }
 
     // To hold the index for current letter
-    int alpha_index;
+    int alpha_index = 0;
 
     // A variable to store each
     // char being read in
-    char ch = '\n';
+    char ch;
 
     // malloc the root node
     root = malloc(sizeof(node));
@@ -119,11 +132,11 @@ bool load(const char *dictionary)
                 leaf -> is_word = true;
 
                 // Increment num_words
-                num_words++;
+                //num_words++;
 
                 // Close the dict file
                 fclose(dict);
-                printf("Dictionary loaded!\n");
+
 
                 // Return true upon successful load
                 return true;
@@ -136,16 +149,14 @@ bool load(const char *dictionary)
             // If ch is an alpha, set alpha_index
             // to ch - 97 --> will result in
             // a value between 0 and 25, inclusively
-            if (isalpha(ch))
-            {
+            if (ch >= 97 && ch <= 122)
                 alpha_index = ch - 97;
-            }
             // If an apostrophe, set alpha_index to 26
-            else if (!isalpha(ch))
+            else if (ch == 39)
                 alpha_index = 26;
 
             // Make sure the alpha_index is
-            // between 0 and 25, inclusively
+            // between 0 and 26, inclusively
             if(alpha_index >= 0 && alpha_index <= 26)
             {
                 // If the children node @ alpha_index is empty
@@ -189,10 +200,12 @@ bool load(const char *dictionary)
         // Close file
         fclose(dict);
         printf("Error reading\n");
-       // unload();
-        return 1;
+        unload();
+        return false;
     }
 
+    fclose(dict);
+    unload();
     // Return true upon
     // loading of dict
     return true;
@@ -203,38 +216,38 @@ bool load(const char *dictionary)
 unsigned int size(void)
 {
     // If the dictionary was loaded
-  /* if(&load)
-   {
-      */  // Return number of words
-        // in dictionary
+   /*if(load == true)
+   {        // Return number of words
+     */   // in dictionary
         return num_words;
-  /* }
+   //}
    // Return 0 if not loaded yet
-    else
+   /* else
         return 0;*/
 }
 
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
+    node *traverse = NULL;
+
     // If root is not NULL
-    if (root != NULL)
+    while (root != NULL)
     {
         // Set trav pointing to the root node
-        trav = root;
+        traverse = root;
 
         // Call the helper function,
         // passing through the trav node
-        free_nodes(trav);
+        free_nodes(traverse);
 
         // Return true upon success
         return true;
     }
     // Return false upon failed unload
-    else
         return false;
 
-    free(trav);
+    free(traverse);
 }
 
 // A void function that accepts a node pointer
@@ -253,4 +266,3 @@ void free_nodes(node *travel)
     // Free the travel pointer
     free(travel);
 }
-

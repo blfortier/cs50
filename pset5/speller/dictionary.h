@@ -16,13 +16,3 @@ unsigned int size(void);
 bool unload(void);
 
 #endif // DICTIONARY_H
-
-typedef struct node
-{
-    bool is_word;
-    struct node *children[27];
-}
-node;
-
-// Declare a helper function for unload
-void free_nodes(node *travel);
