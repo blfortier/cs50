@@ -1,5 +1,5 @@
-// Implements a dictionary's functionality
-
+// Implements a dictionary's functionality                                                                                          // Ways to improve processing time
+                                                                                                                                    // Check for prefixes when loading the dictionary
 #include <stdbool.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -8,26 +8,9 @@
 
 #include "dictionary.h"
 
-typedef struct node
-{
-    bool is_word;
-    struct node *children[27];
-}
-node;
-
-// Declare a helper function for unload
-void free_nodes(node *travel);
-
-
-// Initialize a global node root
-// and node trav, set to NULL
-node *root = NULL;
-
 // To count the number of words
 // being entered in dictionary
-unsigned int num_words = 0;
-
-int alpha_index(char);
+unsigned int words_total = 0;
 
 // Returns true if word is in dictionary else false
 bool check(const char *word)
@@ -35,22 +18,22 @@ bool check(const char *word)
     // To hold the index for current letter
     int position = 0;
 
-    char letter = '\n';
-
     // To count number of misspelled words
     int misspelled_words = 0;
 
     // Set trav node pointing to root node
-    node *trav = root;
+    // These nodes were declared globally
+    trav = root;
 
     // For every char in the word
     for (int i = 0; i < strlen(word); i++)
     {
-        position = alpha_index(letter);
+        // Get the position for each letter
+        position = alpha_index(word[i]);
 
         // If the pointer to children
-        // @ alpha-index is NULL
-        if (trav->children[position] == NULL)
+        // @ position is NULL
+        if (trav -> children[position] == NULL)
         {
             // Increment misspelled_words
             misspelled_words++;
@@ -61,13 +44,13 @@ bool check(const char *word)
         else
         {
             // Move pointer to next letter
-            trav = trav->children[position];
+            trav = trav -> children[position];
         }
     }
 
-   // If the pointer to is_word is
-   // true, return true to signify
-   // the word is in the dictionary
+    // If the pointer to is_word is
+    // true, return true to signify
+    // the word is in the dictionary
     if (trav -> is_word)
         return true;
 
@@ -86,7 +69,7 @@ bool load(const char *dictionary)
     {
         // Print error message
         printf("Could not load dictionary\n");
-        unload();
+
         // Return false upon
         // failed load attempt
         return false;
@@ -99,12 +82,9 @@ bool load(const char *dictionary)
     // char being read in
     char ch;
 
-    // malloc the root node
-    root = malloc(sizeof(node));
-
-    // Create a new node and
-    // assign root to it
-    node *leaf = root;
+    // Create a root node with a pointer
+    root = null_node(trav);
+    trav = root;
 
     // Iterate through dictionary to load every word
     while(true)
@@ -112,65 +92,59 @@ bool load(const char *dictionary)
         // Read in each char
         ch = fgetc(dict);
 
+        // Get position of char
+        position = alpha_index(ch);
+
         // While the end of the word
         // is not being pointed to
-        if (ch != 10)
+        if (ch != '\n')
         {
             // If the end of file is reached
             if (feof(dict))
             {
                 // Set the pointer to is_word to true
-                leaf -> is_word = true;
-
-                // Increment num_words
-                //num_words++;
+                trav -> is_word = true;
 
                 // Close the dict file
                 fclose(dict);
-
 
                 // Return true upon successful load
                 return true;
             }
 
-            position = alpha_index(ch);
-
-
-            // Make sure the alpha_index is
+            // Make sure the position is
             // between 0 and 26, inclusively
             if(position >= 0 && position <= 26)
             {
                 // If the children node @ alpha_index is empty
-                if (leaf -> children[position] == NULL)
+                if (trav -> children[position] == NULL)
                 {
                     // malloc a new children node
-                    leaf -> children[position] = malloc(sizeof(node));
-                    //  printf("moving to new node\n");
+                    trav -> children[position] = null_node(trav -> children[position]);
+                     //printf("moving to new node\n");
                     // Point leaf to the newly created node
-                    leaf = leaf -> children[position];
+                    //trav = trav -> children[position];
                 }
                 // If node already exists
-                else
-                {
-                    // Move leaf pointer to next node
-                    leaf = leaf ->children[position];
-                }
+
+                    // Move trav pointer to next node
+                    trav = trav -> children[position];
             }
         }
 
         // End of word is reached
         else
         {
-            //printf("finished word\n");
+            // printf("finished word\n");
             // Set pointer to is_word to true
-            leaf -> is_word = true;
+            trav -> is_word = true;
 
             // Increment num_words
-            num_words++;
+            words_total++;
 
-            // Set the leaf pointer
+            // Set the trav pointer
             // back to the root node
-            leaf = root;
+            trav = root;
         }
     }
 
@@ -181,24 +155,24 @@ bool load(const char *dictionary)
         // Close file
         fclose(dict);
         printf("Error reading\n");
-        unload();
         return false;
     }
 
+    // Close file
     fclose(dict);
-    unload();
+
     // Return true upon
     // loading of dict
     return true;
-
 }
 
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // If the dictionary was loaded return number of words
+    // If the dictionary was loaded,
+    // return number of words
     if (&load)
-        return num_words;
+        return words_total;
     else
         return 0;
 }
@@ -206,26 +180,10 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    node *traverse = NULL;
-
-    // If root is not NULL
-    while (root != NULL)
-    {
-        // Set trav pointing to the root node
-        traverse = root;
-
-        // Call the helper function,
-        // passing through the trav node
-        free_nodes(traverse);
-
-        // Return true upon success
-        return true;
-    }
-
-    // Return false upon failed unload
-     return false;
-
-    free(traverse);
+    // Call the free_nodes function
+    // to free all malloc'd node
+    free_nodes(root);
+    return true;
 }
 
 // A void function that accepts a node pointer
@@ -246,16 +204,36 @@ void free_nodes(node *travel)
 }
 
 // Find the position for the letter
-// in the children node
+// in the children node. Accepts a
+// char and returns an int
 int alpha_index(char ch)
 {
-    // If an apostrophe
-    if (ch == '\'')
-        return 26;
-    else if (ch >= 'a' && ch <= 'z')
-        return ch - 'a';
+    // Return the index based on char
+    if (ch >= 'a' && ch <= 'z')
+         return ch - 'a';
+    else if(ch >= 'A' && ch <= 'Z')
+         return ch - 'A';
     else
-        return ch - 'A';
+        return 26;
 }
 
+// A function that creates and initializes to
+// NULL the 27 pointers in the node children
+// Accepts and returns a node pointer
+node *null_node(node *node_ptr)
+{
+    node_ptr = malloc(sizeof(node));
+    // If the pointer is NULL, return NULL
+    if (node_ptr == NULL)
+        return NULL;
 
+    // For every node in children, set to NULL
+    for (int i = 0; i < 27; i++)
+        node_ptr -> children[i] = NULL;
+
+    // Set is_word to false
+    node_ptr -> is_word = false;
+
+    // Return the node that was just created
+    return node_ptr;
+}
