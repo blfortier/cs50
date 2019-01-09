@@ -12,15 +12,19 @@ def main():
 
 
 def halfPyramid(height):
-
     for i in range(height):
         for j in range(1, height - 1 - i):
-            print("  ", end = "")
-        print(" ")
+            print(" ", end = "")
+        for k in range(1, i + 2):
+            print("#", end = "")
 
         for k in range(1, i + 2):
             print("#", end = "")
-    print("\n")
+        print(" ")
+
+
+
+
 
 if __name__ == "__main__":
     main()
