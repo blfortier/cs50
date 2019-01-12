@@ -3,31 +3,35 @@ from sys import argv
 
 def main():
 
+    # Check for comman line args
     if len(argv) != 2:
        print("Usage: python caesar.py k")
 
+    # Convert the key into an int
     key = int(argv[1])
 
+    # Prompt user for plaintext
     plainTxt = get_string("plaintext: ")
 
-    print("ciphertext: ")
+    # Print cyphertext
+    print("ciphertext: ", end = "")
 
-    encrypt = encryptText(plainTxt, key)
-
-
-def encryptText(text, code):
-
-    for c in text:
-        if text[c].isalpha() and text[c].islower():
-            print("{c}".format((text[c] - 97) + code) % 26) + 97)
-        elif text[c].isalpha() and text[c].isupper():
-            print("{c}".format((text[c] - 65) + code) & 26) + 65)
-        else
-            print("{c}".format(text[c]))
-
-
-
-
+    # Loop throught plain text
+    for c in plainTxt:
+        if c.isalpha():
+            if c.isupper():
+                # If the current character is alpha and upper case
+                cypherTxt = ((ord(c) - 65 + key) % 26) + 65
+                print(chr(cypherTxt), end ="")
+            else:
+                # If the current char is an alpha and lower
+                cypherTxt = ((ord(c) - 97 + key) % 26) + 97
+                print(chr(cypherTxt), end ="")
+        else:
+            # Print all other characters
+            print(c, end= "")
+    # Print a newline after end of cypther text
+    print()
 
 
 if __name__ == "__main__":
