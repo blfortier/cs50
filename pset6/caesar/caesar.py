@@ -1,6 +1,7 @@
 from cs50 import get_string
 from sys import argv
 
+
 def main():
 
     # Check for comman line args
@@ -14,7 +15,7 @@ def main():
     plainTxt = get_string("plaintext: ")
 
     # Print cyphertext
-    print("ciphertext: ", end = "")
+    print("ciphertext: ", end="")
 
     # Loop throught plain text
     for c in plainTxt:
@@ -26,10 +27,11 @@ def main():
             else:
                 # If the current char is an alpha and lower
                 cypherTxt = ((ord(c) - 97 + key) % 26) + 97
-                print(chr(cypherTxt), end ="")
+                print(chr(cypherTxt), end="")
         else:
             # Print all other characters
-            print(c, end= "")
+            print(c, end="")
+
     # Print a newline after end of cypther text
     print()
 
