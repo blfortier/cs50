@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     // Check for CL argument
-    if(argc != 2)
+    if (argc != 2)
     {
         fprintf(stderr, "Usage: ./recover image\n");
         return 1;
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     char *infile = argv[1];
 
     // Open input file
-    FILE* inptr = fopen(infile, "r");
+    FILE *inptr = fopen(infile, "r");
 
     // Check if file exists
     if (inptr == NULL)
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     }
 
     // File to store jpegs in
-    FILE* images = NULL;
+    FILE *images = NULL;
 
     // An array to store the bytes being read
     unsigned char buffer[512];
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
             numPics++;
         }
 
-         // If currently scanning in jpeg blocks
+          // If currently scanning in jpeg blocks
           if (findImage == true)
             fwrite(&buffer, 512, 1, images);
     }

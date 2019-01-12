@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-     // remember size to resize by, store as int
+    // remember size to resize by, store as int
     int resize = atoi(argv[1]);
 
     // Make sure argv[1] is a positive number <= 100
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     // Calculate the resized image's file size
     bfNew.bfSize = biNew.biSizeImage + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
 
-     // write outfile's BITMAPFILEHEADER, updated with new header
+    // write outfile's BITMAPFILEHEADER, updated with new header
     fwrite(&bfNew, sizeof(BITMAPFILEHEADER), 1, outptr);
 
     // write outfile's BITMAPINFOHEADER, updated with new header
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
         // Read the scanlines for as many times as resize
         for (int j = 0; j < resize; j++)
         {
-             // iterate over pixels in scanline
+            // iterate over pixels in scanline
             for (int k = 0; k < bi.biWidth; k++)
             {
                 // temporary storage
@@ -107,12 +107,12 @@ int main(int argc, char *argv[])
                 fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
                 // Write the triple to the file 'resize' times, horizontal resizing
-                for(int p = 0; p < resize; p++)
+                for (int p = 0; p < resize; p++)
                    fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
             }
 
             // Add padding to outfile
-             for (int l = 0; l < paddingNew; l++)
+            for (int l = 0; l < paddingNew; l++)
                     fputc(0x00, outptr);
 
             // Bring the cursor to the beginning of the scanline, vertical resizing
