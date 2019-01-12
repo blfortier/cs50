@@ -3,24 +3,27 @@ from cs50 import get_int
 def main():
 
     while True:
-        height = get_int("Height between 0 and 23: ")
+        height = get_int("Height between 1 and 8: ")
 
-        if (height >= 0 or height <= 23):
+        if (height >= 0 and height <= 8):
             break;
 
-    halfPyramid(height)
+   # halfPyramid(height)
 
 
-def halfPyramid(height):
+#def halfPyramid(height):
 
-    for i in range(height):
-        for j in range(1, height - 1 - i):
-            print("  ", end = "")
-        print(" ")
+    for i in range(0, height):
 
-        for k in range(1, i + 2):
-            print("#", end = "")
-    print("\n")
+        for j in range(1, height - i):
+            print(" ", end = "")
+            print("#" * i, end = "")
+
+       # for k in range(i + 1):
+       #     print("#", end = "")
+
+        print()
+
 
 if __name__ == "__main__":
     main()
