@@ -2,13 +2,24 @@
 
 {% block body %}
 
-    <div class="col">
-        <form action="/compare" enctype="multipart/form-data" method="post">
-            <input type="file" id="pickFile1">
-            <input type="file" id="pickFile2">
 
-
+         <form action="/compare" enctype="multipart/form-data" method="post">
+             <div class="row" style="padding-top: 12px;">
+                <div class="col-sm-4 text-center">
+                    <input style="padding-bottom: 20px;" type="file" id="pickFile1">
+                    <input type="file" id="pickFile2">
+                </div>
+                <div class="col-sm-4 text-center">
+                    <input type="radio" name="compare_type" value="lines">Compare lines<br>
+                    <input type="radio" name="compare_type" value="sentences"> Compare sentences<br>
+                    <input type="radio" name="compare_type" value="substrings"> Compare substrings<br>
+                    <input type="text" name="length" value="of length n"><br>
+                </div>
+                <div class="col-sm-4 text-center" style="padding-top:30px">
+                    <input type="submit" value="Submit">
+                </div>
+            </div>
         </form>
-    </div>
+
 
 {% endblock %}

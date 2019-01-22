@@ -20,23 +20,17 @@ def sentences(a, b):
 def substrings(a, b, n):
     """Return substrings of length n in both a and b"""
 
+    subs_a = set(subs(a, n))
+    subs_b = set(subs(b, n))
+
+    return subs_a & subs_b
+
+def subs(text, n):
     subs = []
 
-  #  for word in range(len(a)):
-  #     subs_in_a = set(a[word:n])
+    for i in range(len(text) - n + 1):
+        subs.append(text[i:i + n])
 
-    #for words in range(len(b)):
-     #   print(words)
-      #  subs_in_b = set(b[words:n])
+    print("Subs: {}".format(subs))
 
-    #print(subs_in_a)
-    #print(subs_in_b)
-
-    #subs = list(subs_in_a & subs_in_b)
-
-    #print(subs)
-
-
-     # TODO
     return subs
-
