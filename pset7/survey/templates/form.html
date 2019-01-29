@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+    <!-- http://getbootstrap.com/docs/4.1/content/typography/ -->
+    <h1 class="mb-3">Form<img src = "https://images.pexels.com/photos/1596888/pexels-photo-1596888.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" alt = "Sign that says pizza" style = "width: 100%; height: 100px;"></h1>
+
+    <!-- http://getbootstrap.com/docs/4.1/components/forms/ -->
+    <form action="/form" method="post" class = "needs-validation form-border g-font" novalidate>
+        <div class = "form-row">
+            <div class = "col-md-4 form-group is-valid needs-validation spacing" style = "padding-right: 30px;" >
+                 <label for = "name"><strong>What's your name?</strong></label>
+                 <input type = "text" name ="name" class = "form-control" placeholder = "Your name" required><br>
+                  <div class= "invalid-feedback">
+                     <strong>Please enter your name</strong>
+                 </div>
+             </div>
+
+
+             <div class = "col-md-4 form-group spacing" style = "padding-left: 60px;">
+                 <label for = "email"><strong>What's your email?</strong></label>
+                 <input type = "text" name = "email" class = "form-control" placeholder = "Your email"><br>
+             </div>
+
+             <div class = "col-md-4 form-group needs-validation spacing" style = "padding-left: 100px;">
+                 <label for = "pizza_consumption"><strong>How many times a month do you eat pizza?</strong></label>
+                 <div>
+                 <input type = "radio" name = "pizza_consumption" value = "none" required> I don't eat pizza<br>
+                 <input type = "radio" name = "pizza_consumption" value = "1-3" required> 1-3<br>
+                 <input type = "radio" name = "pizza_consumption" value = "4-6" required> 4-6<br>
+                 <input type = "radio" name = "pizza_consumption" value = "7+" required> 7+<br>
+                 </div>
+                 <div class= "invalid-feedback">
+                     <strong>Please choose one</strong>
+                 </div>
+             </div>
+
+
+             <div class = "col-md-4 form-group is-valid needs-validation" style = "padding-right: 30px;">
+                 <label for = "pizza_place"><strong>Where's your favorite place to get pizza?</strong></label>
+                 <input type = "text" name ="pizza_place" class = "form-control" placeholder = "favorite pizza place" required><br>
+                  <div class= "invalid-feedback">
+                     <label><strong>Please enter the name of your favorite pizza place</strong></label>
+                 </div>
+             </div>
+
+             <div class = "col-md-4 form-group is-valid needs-validation" style = "padding-left: 60px;">
+                 <label for = "fav-topping"><strong>What's your favorite pizza topping?</strong></label>
+                 <select name = "topping" class = "form-control" required multiple>
+                     <option name = "topping" disabled selected value = "">Select One</option>
+                     <option name = "topping" value = "pepperoni">Pepperoni</option>
+                     <option name = "topping" value = "ham">Ham</option>
+                     <option name = "topping" value = "mushrooms">Mushrooms</option>
+                     <option name = "topping" value = "Peppers">Peppers</option>
+                     <option name = "topping" value = "olives">Olives</option>
+                     <option name = "topping" value = "cheese">Cheese</option>
+                     <option name = "topping" value = "pineapple">Pineapple</option>
+                     <option name = "topping" value = "bacon">Bacon</option>
+                     <option name = "topping" value = "none">None of the above</option>
+                     <option name = "topping" value = "n/a">N/A</option>
+                 </select>
+                  <div class= "invalid-feedback">
+                     <strong>Please choose at least one</strong>
+                 </div>
+             </div>
+
+             <div class = "col-md-4 form-group is-valid needs-validation" style = "padding-left: 100px;">
+                <label for = "crust_type"><strong>What's your favorite type of crust?</strong></label>
+                <div>
+                <input type = "radio" name = "crust_type" value = "deep" required> Deep dish<br>
+                <input type = "radio" name = "crust_type" value = "thin" required> Thin crust<br>
+                <input type = "radio" name = "crust_type" value = "stuffed" required> Stuffed crust<br>
+                <input type = "radio" name = "crust_type" value = "thick" required> Thick crust<br>
+                <input type = "radio" name = "crust_type" value = "flatbread" required> Flatbread crust<br>
+                <input type = "radio" name = "crust_type" value = "n/a" required> N/A<br>
+                </div>
+             </div>
+              <div class= "invalid-feedback">
+                  <strong>Please choose one</strong>
+              </div>
+         </div>
+
+        <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+        <div class="text-center">
+        <button class="btn" style = "background-color: #8ca3a3; color: white;" type="submit">Submit</button>
+        </div>
+
+    </form>
+
+    <script>
+
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              }, false);
+            });
+          }, false);
+        })();
+
+    </script>
+
+{% endblock %}

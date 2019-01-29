@@ -1,0 +1,13 @@
+.spacing {
+    margin-bottom: 100px;
+}
+
+.form-border {
+    border: 5px outset black;
+    padding: 25px;
+}
+
+.g-font {
+    font-family: 'Nothing You Could Do', cursive;
+}
+
