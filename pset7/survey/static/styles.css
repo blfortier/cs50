@@ -11,3 +11,12 @@
     font-family: 'Nothing You Could Do', cursive;
 }
 
+.resize {
+    font-size: 22px;
+    text-align: center;
+}
+
+.radio-align {
+    text-align: left;
+}
+

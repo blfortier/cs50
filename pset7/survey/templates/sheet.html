@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+       <h1>Survey Data</h1>
+   <!-- <ul>
+        {% for user in users %}
+            <li>{{ user[0] }} from {{ user[1] }}</li>
+        {% endfor %}
+    </ul>
+-->
+
+
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Pizza Consumption (per month)</th>
+            <th>Favorite Pizza Place</th>
+            <th>Favorite Topping</th>
+            <th>Favorite Crust</th>
+        </tr>
+        <tr>
+            {% for user in users %}
+            <th>{{ user[0] }} from {{ user[1] }}</th>
+             {% endfor %}
+        </tr>
+    </table>
+
+
+
+
+
+
+{% endblock %}

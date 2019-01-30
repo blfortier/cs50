@@ -35,6 +35,7 @@ def get_form():
 @app.route("/form", methods=["POST"])
 def post_form():
     name = request.form.get("name")
+    email = request.form.get("email")
     pizza_consume = request.form.get("pizza_consumption")
     pizza_place = request.form.get("pizza_place")
     topping = request.form.get("topping")
@@ -45,7 +46,7 @@ def post_form():
 
     file = open("survey.csv", "a")
     writer = csv.writer(file)
-    writer.writerow((request.form.get("name"), request.form.get("pizza_consumption"), request.form.get("pizza_place"), request.form.get("crust_type"), request.form.get("topping")))
+    writer.writerow((request.form.get("name"), request.form.get("pizza_consumption"), request.form.get("pizza_place"), request.form.get("crust_type"), request.form.get("topping"), request.form.get("email")))
     file.close()
     return redirect("/sheet")
 
@@ -55,4 +56,4 @@ def get_sheet():
     file = open("survey.csv", "r")
     reader = csv.reader(file)
     users = list(reader)
-    return render_template("error.html", users = users)
+    return render_template("sheet.html", users = users)
