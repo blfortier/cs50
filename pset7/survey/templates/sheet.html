@@ -3,31 +3,27 @@
 {% block main %}
 
        <h1>Survey Data</h1>
-   <!-- <ul>
-        {% for user in users %}
-            <li>{{ user[0] }} from {{ user[1] }}</li>
-        {% endfor %}
-    </ul>
--->
 
-
-
-    <table>
-        <tr>
+<div>
+    <table class = "page-border" style = "text-align: center;">
+        <tr style = "text-align: center;">
             <th>Name</th>
-            <th>Email</th>
             <th>Pizza Consumption (per month)</th>
             <th>Favorite Pizza Place</th>
-            <th>Favorite Topping</th>
             <th>Favorite Crust</th>
+            <th>Favorite Topping</th>
         </tr>
-        <tr>
-            {% for user in users %}
-            <th>{{ user[0] }} from {{ user[1] }}</th>
-             {% endfor %}
+        {% for user in users %}
+        <tr style = "text-align: center; ">
+            <th>{{ user[0] }}</th>
+            <th>{{ user[1] }}</th>
+            <th>{{ user[2] }}</th>
+            <th>{{ user[3] }}</th>
+            <th>{{ user[4] }}</th>
         </tr>
+        {% endfor %}
     </table>
-
+</div>
 
 
 

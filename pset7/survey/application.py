@@ -35,7 +35,6 @@ def get_form():
 @app.route("/form", methods=["POST"])
 def post_form():
     name = request.form.get("name")
-    email = request.form.get("email")
     pizza_consume = request.form.get("pizza_consumption")
     pizza_place = request.form.get("pizza_place")
     topping = request.form.get("topping")

@@ -6,7 +6,7 @@
     <h1 class="">Form
 
     <!-- http://getbootstrap.com/docs/4.1/components/forms/ -->
-    <form action="/form" method="post" class = "needs-validation form-border g-font" novalidate>
+    <form action="/form" method="post" class = "needs-validation page-border g-font" novalidate>
         <div class = "form-row">
             <div class = "col-md-4 form-group is-valid needs-validation spacing resize" style = "padding-right: 30px;" >
                  <label for = "name"></label> <strong>What's your name?</strong></label>
@@ -16,11 +16,6 @@
                  </div>
              </div>
 
-
-             <div class = "col-md-4 form-group spacing resize" style = "padding-left: 60px;">
-                 <label for = "email"><strong>What's your email?</strong></label>
-                 <input type = "text" name = "email" class = "form-control" placeholder = "Your email"><br>
-             </div>
 
              <div class = "col-md-4 form-group needs-validation spacing resize" style = "padding-left: 100px;">
                  <label for = "pizza_consumption"><strong>How many times a month do you eat pizza?</strong></label>
@@ -64,10 +59,15 @@
                  </div>
              </div>
 
+
+            <div class = "col-md-4" style = "padding-left: 100px;">
+                <img style = "width: 100%;" src ="https://images.pexels.com/photos/1653877/pexels-photo-1653877.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt = "A pizza">
+            </div>
+
              <div class = "col-md-4 form-group is-valid needs-validation resize" style = "padding-left: 100px;">
                 <label for = "crust_type"><strong>What's your favorite type of crust?</strong></label>
                 <div class = "radio-align">
-                <input type = "radio" name = "crust_type" value = "deep" class = “form-check-input” required> Deep dish<br>
+                <input type = "radio" name = "crust_type" value = "deep dish" class = “form-check-input” required> Deep dish<br>
                 <input type = "radio" name = "crust_type" value = "thin" class = “form-check-input” required> Thin crust<br>
                 <input type = "radio" name = "crust_type" value = "stuffed" class = “form-check-input” required> Stuffed crust<br>
                 <input type = "radio" name = "crust_type" value = "thick" class = “form-check-input” required> Thick crust<br>
