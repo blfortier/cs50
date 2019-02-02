@@ -55,4 +55,4 @@ def get_sheet():
     file = open("survey.csv", "r")
     reader = csv.reader(file)
     users = list(reader)
-    return render_template("sheet.html", users = users)
+    return render_template("sheet.html", users=users)

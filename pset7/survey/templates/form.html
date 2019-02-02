@@ -3,14 +3,14 @@
 {% block main %}
 
     <!-- http://getbootstrap.com/docs/4.1/content/typography/ -->
-    <h1 class="">Form
+    <h1>Form</h1>
 
     <!-- http://getbootstrap.com/docs/4.1/components/forms/ -->
     <form action="/form" method="post" class = "needs-validation page-border g-font" novalidate>
         <div class = "form-row">
             <div class = "col-md-4 form-group is-valid needs-validation spacing resize" style = "padding-right: 30px;" >
-                 <label for = "name"></label> <strong>What's your name?</strong></label>
-                 <input type = "text" name ="name" class = "form-control" placeholder = "Your name" required><br>
+                 <label for = "name"><strong>What's your name?</strong></label>
+                 <input type = "text" name ="name" id = "name" class = "form-control" placeholder = "Your name" required><br>
                   <div class= "invalid-feedback">
                      <strong>Please enter your name</strong>
                  </div>
@@ -42,17 +42,17 @@
              <div class = "col-md-4 form-group is-valid needs-validation resize" style = "padding-left: 60px;">
                  <label for = "fav-topping"><strong>What's your favorite pizza topping?</strong></label>
                  <select name = "topping" class = "form-control" required multiple>
-                     <option name = "topping" disabled selected value = "">Select One</option>
-                     <option name = "topping" value = "pepperoni">Pepperoni</option>
-                     <option name = "topping" value = "ham">Ham</option>
-                     <option name = "topping" value = "mushrooms">Mushrooms</option>
-                     <option name = "topping" value = "Peppers">Peppers</option>
-                     <option name = "topping" value = "olives">Olives</option>
-                     <option name = "topping" value = "cheese">Cheese</option>
-                     <option name = "topping" value = "pineapple">Pineapple</option>
-                     <option name = "topping" value = "bacon">Bacon</option>
-                     <option name = "topping" value = "none">None of the above</option>
-                     <option name = "topping" value = "n/a">N/A</option>
+                     <option disabled selected value = "">Select One</option>
+                     <option value = "pepperoni">Pepperoni</option>
+                     <option value = "ham">Ham</option>
+                     <option value = "mushrooms">Mushrooms</option>
+                     <option value = "Peppers">Peppers</option>
+                     <option value = "olives">Olives</option>
+                     <option value = "cheese">Cheese</option>
+                     <option value = "pineapple">Pineapple</option>
+                     <option value = "bacon">Bacon</option>
+                     <option value = "none">None of the above</option>
+                     <option value = "n/a">N/A</option>
                  </select>
                   <div class= "invalid-feedback">
                      <strong>Please choose at least one</strong>
